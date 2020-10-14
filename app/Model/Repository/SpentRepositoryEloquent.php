@@ -30,7 +30,8 @@ class SpentRepositoryEloquent extends RepositoryAbstractEloquent
                 'note.gitlab_created_at',
                 'spent.spent_at',
                 'issue.iid as issue',
-                DB::raw("issue.title || CASE WHEN spent.description IS NOT NULL THEN ' |\n' || spent.description ELSE '' END as description")
+                DB::raw("issue.title || CASE WHEN spent.description IS NOT NULL THEN ' |\n' || spent.description ELSE '' END as description"),
+                'contributor.name as contributor'
             ])
             ->join('note', 'note.id', '=', 'spent.note_id')
             ->join('contributor', 'contributor.id', '=', 'note.author_id')
@@ -119,7 +120,7 @@ class SpentRepositoryEloquent extends RepositoryAbstractEloquent
                 'issue.iid',
                 'issue.title as issue_title',
                 'spent.hours',
-                'spent.description as note_description',
+                'spent.description as note_description'
             ])
             ->join('note', 'note.id', '=', 'spent.note_id')
             ->join('issue', 'issue.id', '=', 'note.issue_id')
